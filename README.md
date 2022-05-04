@@ -4,8 +4,9 @@ aplicación para la gestion basica de pedidos construida en Django usando Django
 
 
 1. crear entorno virtual (opcional)
-2. instalar las dependencias ( ejecutar en la raiz del proyecto pip install -r requirements.txt)
-3. ejecutar las migraciones del proyecto (python manage.py makemigrations, python manage.py migrate)
+2. version de python >= 3.6
+3. instalar las dependencias ( ejecutar en la raiz del proyecto pip install -r requirements.txt)
+4. ejecutar las migraciones del proyecto (python manage.py makemigrations, python manage.py migrate)
 
 
 Documentación API
