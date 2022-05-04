@@ -27,13 +27,10 @@ class OrderViewSet(viewsets.ModelViewSet):
         return Response(data=data, status=final_status, headers=headers)
 
     def update(self, request, *args, **kwargs):
-        print()
-        updated_by = request.user
         data = self.request.data
 
         serializer = self.get_serializer(self.get_object(), data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.validated_data['updated_by'] = updated_by
         self.perform_update(serializer)
         headers = self.get_success_headers(serializer.data)
         final_status = status.HTTP_200_OK
