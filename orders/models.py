@@ -14,7 +14,7 @@ class Order(models.Model):
                                   on_delete=models.PROTECT, verbose_name='Conductor')
     created_by = models.CharField(max_length=100, verbose_name='Creado por')
     created_date = models.DateField(auto_now_add=True, editable=False, verbose_name='Fecha Creacion')
-    updated_by = models.CharField(max_length=100, verbose_name='Modificado por')
+    updated_by = models.CharField(max_length=100, blank=True, null=True, verbose_name='Modificado por')
     updated_date = models.DateField(blank=True, null=True, verbose_name='Fecha Modificacion')
 
     def __str__(self):
