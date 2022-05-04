@@ -21,28 +21,28 @@ class OrderSerializer(serializers.ModelSerializer):
             if self._validate_point(value):
                 raise serializers.ValidationError('La Latitud de recogida es incorrecta debe estar entre 0 y 100')
 
+        return value
+
     def validate_pickup_lng(self, value):
         if value:
             if self._validate_point(value):
                 raise serializers.ValidationError('La Longitud de recogida es incorrecta debe estar entre 0 y 100')
+
+        return value
 
     def validate_delivery_lat(self, value):
         if value:
             if self._validate_point(value):
                 raise serializers.ValidationError('La Latitud de entrega es incorrecta debe estar entre 0 y 100')
 
+        return value
+
     def validate_delivery_lng(self, value):
         if value:
             if self._validate_point(value):
                 raise serializers.ValidationError('La Longitud de entrega es incorrecta debe estar entre 0 y 100')
 
-    def validate_id_driver(self, value):
-        """
-        valida
-        :param value:
-        :return:
-        """
-        pass
+        return value
 
     def _validate_point(self, value):
         """
@@ -62,9 +62,6 @@ class OrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         order_init_date = validated_data.get('order_init_date')
         validated_data['order_end_date'] = order_init_date + dt.timedelta(hours=1)
-
-        # Validar si el conductor ya tiene asignado un pedido para la fecha ingresada
-
 
         return Order.objects.create(**validated_data)
 
