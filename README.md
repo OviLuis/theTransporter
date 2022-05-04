@@ -10,13 +10,13 @@ aplicación para la gestion basica de pedidos construida en Django usando Django
 
 Documentación API
 
-*/orders/ POST: permite Agendar un pedido
-*/orders/ GET: consulta todos los pedidos registradas
-*/orders/?order_date= GET: Obtiene todos los pedidos asignados en un día en específico ordenados por la hora
-*/orders/?order_date=&driver= GET: Obtiene todos los pedidos de un conductor en un día en específico ordenados por la hora.
-*/drivers/ POST: Permite registrar un conductor
-*/drivers/ GET: Obtiene todos los conductores registrados
-*/drivers/available/?lat=&lng=&order_date= GET: Buscar el conductor disponible que esté más cerca de un punto geográfico en una fecha y hora
+* /orders/ POST: permite Agendar un pedido
+* /orders/ GET: consulta todos los pedidos registradas
+* /orders/?order_date= GET: Obtiene todos los pedidos asignados en un día en específico ordenados por la hora
+* /orders/?order_date=&driver= GET: Obtiene todos los pedidos de un conductor en un día en específico ordenados por la hora.
+* /drivers/ POST: Permite registrar un conductor
+* /drivers/ GET: Obtiene todos los conductores registrados
+* /drivers/available/?lat=&lng=&order_date= GET: Buscar el conductor disponible que esté más cerca de un punto geográfico en una fecha y hora
 
 
 Actualización automatica de la ubicacion de los conductores
