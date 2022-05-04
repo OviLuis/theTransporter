@@ -20,6 +20,7 @@ Documentación API
 
 
 Actualización automatica de la ubicacion de los conductores
+
 Se realiza la actualizacion de la ubicación de los conductores cada 60 segundos mediante una tarea programada en drivers/tasks.py
 
 La tarea programada es invocada cuando la configuracion de la aplicacion drive (DriversConfig) esta lista (metodo ready())
