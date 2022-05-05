@@ -14,6 +14,7 @@ from .models import Driver
 from .serializers import DriverSerializer
 from .rules import get_available_drivers
 
+
 class DriverViewSet(viewsets.ModelViewSet):
     queryset = Driver.objects.all().order_by('-id')
     serializer_class = DriverSerializer
@@ -72,10 +73,15 @@ def available_drivers(request):
     closer_drivers_list = get_available_drivers(lat, lng, order_date)
     print(closer_drivers_list)
 
-    # Listado de los conductores mas cercanos
-    queryset = queryset.filter(pk__in=closer_drivers_list)
+    drivers = []
+    # Dado que al obtener un query set filtrado con los IDs obtenidos en closer_drivers_list,
+    # El queryset por defecto ordena el resultado por id, entonces se itera closer_drivers_list
+    # para obtener los objetos Driver de acuerdo al orden establecido en closer_drivers_list
+    for item in closer_drivers_list:
+        driver_obj = queryset.filter(pk=item).latest('id')
+        drivers.append(driver_obj)
 
-    serializer = DriverSerializer(queryset, many=True)
+    serializer = DriverSerializer(drivers, many=True)
     data = serializer.data
 
     return Response(data=data, status=status.HTTP_200_OK)
