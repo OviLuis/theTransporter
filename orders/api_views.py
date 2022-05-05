@@ -24,16 +24,6 @@ class OrderViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        data = self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        final_status = status.HTTP_200_OK
-        return Response(data=data, status=final_status, headers=headers)
-
-    def update(self, request, *args, **kwargs):
-        data = self.request.data
-
-        serializer = self.get_serializer(self.get_object(), data=data)
-        serializer.is_valid(raise_exception=True)
 
         lat = serializer.validated_data.get('pickup_lat')
         lng = serializer.validated_data.get('pickup_lng')
@@ -56,6 +46,18 @@ class OrderViewSet(viewsets.ModelViewSet):
 
             # se asigna el conductor mas cercano que se encuentre.
             serializer.validated_data['id_driver'] = driver
+
+        data = self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        final_status = status.HTTP_200_OK
+        return Response(data=data, status=final_status, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        data = self.request.data
+
+        serializer = self.get_serializer(self.get_object(), data=data)
+        serializer.is_valid(raise_exception=True)
+        print(serializer.validated_data)
         self.perform_update(serializer)
         headers = self.get_success_headers(serializer.data)
         final_status = status.HTTP_200_OK
