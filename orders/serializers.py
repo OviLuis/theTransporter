@@ -7,12 +7,13 @@ from .models import Order
 class OrderSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
-        order_init_date = data.get('order_init_date')
-        order_end_date = order_init_date + dt.timedelta(hours=1)
-        # Validar si el conductor ya tiene asignado un pedido para la fecha ingresada
-        qs = Order.objects.filter(id_driver=data.get('id_driver'), order_init_date__gte=order_init_date, order_end_date__lte=order_end_date)
-        if qs.exists():
-            raise serializers.ValidationError('El conductor no esta disponible.')
+        if data.get('id_driver'):
+            order_init_date = data.get('order_init_date')
+            order_end_date = order_init_date + dt.timedelta(hours=1)
+            # Validar si el conductor ya tiene asignado un pedido para la fecha ingresada
+            qs = Order.objects.filter(id_driver=data.get('id_driver'), order_init_date__gte=order_init_date, order_end_date__lte=order_end_date)
+            if qs.exists():
+                raise serializers.ValidationError('El conductor no esta disponible.')
 
         return data
 

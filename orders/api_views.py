@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 
+from drivers.rules import get_available_drivers
+from drivers.models import Driver
+
 from .models import Order
 from .serializers import OrderSerializer
 
@@ -31,6 +34,28 @@ class OrderViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(self.get_object(), data=data)
         serializer.is_valid(raise_exception=True)
+
+        lat = serializer.validated_data.get('pickup_lat')
+        lng = serializer.validated_data.get('pickup_lng')
+        order_date = serializer.validated_data.get('order_init_date')
+
+        # obtener listado de los IDs de los conductores mas cercanos
+        closer_drivers_list = get_available_drivers(lat, lng, order_date)
+
+        print(closer_drivers_list)
+
+        # Se valida que existan conductores disponibles para la fecha indicada
+        # para asi asignar el conductor mas cercano disponible.
+        # de lo contrario se deja el conductor enviado inicialmente en el request.
+        if closer_drivers_list:
+            # se obtiene el primer ID de  la lista por ser el mas cercano
+            closer_driver = closer_drivers_list[0]
+
+            # Listado de los conductores mas cercanos
+            driver = Driver.objects.get(pk=closer_driver)
+
+            # se asigna el conductor mas cercano que se encuentre.
+            serializer.validated_data['id_driver'] = driver
         self.perform_update(serializer)
         headers = self.get_success_headers(serializer.data)
         final_status = status.HTTP_200_OK
